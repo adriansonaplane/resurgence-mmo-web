@@ -1,0 +1,53 @@
+{
+  "project": "Diablo-Inspired MMORPG Website Platform",
+  "package": "d2_mmo_codex_blueprints",
+  "version": "0.1",
+  "phase_count": 20,
+  "required_stack": {
+    "frontend": "Angular + Angular SSR + TypeScript",
+    "backend": "Node.js + NestJS + Fastify Adapter + TypeScript",
+    "database": "Neon PostgreSQL",
+    "orm": "Drizzle ORM",
+    "cms": "Directus",
+    "auth": "Auth0 + OAuth 2.0 + OpenID Connect",
+    "payments": "Stripe Checkout + Stripe Webhooks",
+    "hosting": "Google Cloud Run",
+    "ci_cd": "GitHub Actions",
+    "frontend_testing": [
+      "Angular Testing Utilities",
+      "Playwright",
+      "Jest"
+    ],
+    "backend_testing": [
+      "Jest",
+      "Fastify Inject",
+      "Testcontainers"
+    ],
+    "excluded": [
+      "Supertest",
+      "Plain Express backend"
+    ]
+  },
+  "phase_files": [
+    "01_PHASE_BLUEPRINTS/phase-00-architecture-confirmation-and-delivery-targets.md",
+    "01_PHASE_BLUEPRINTS/phase-01-repository-and-local-development-foundation.md",
+    "01_PHASE_BLUEPRINTS/phase-02-cloud-and-environment-baseline.md",
+    "01_PHASE_BLUEPRINTS/phase-03-neon-postgresql-and-drizzle-foundation.md",
+    "01_PHASE_BLUEPRINTS/phase-04-directus-cms-service.md",
+    "01_PHASE_BLUEPRINTS/phase-05-angular-ssr-public-website.md",
+    "01_PHASE_BLUEPRINTS/phase-06-nestjs-api-core-and-cross-cutting-concerns.md",
+    "01_PHASE_BLUEPRINTS/phase-07-auth0-oauth-oidc-user-profiles-rbac.md",
+    "01_PHASE_BLUEPRINTS/phase-08-account-dashboard-mvp.md",
+    "01_PHASE_BLUEPRINTS/phase-09-storefront-product-model-and-public-store.md",
+    "01_PHASE_BLUEPRINTS/phase-10-stripe-checkout-webhooks-orders-entitlements.md",
+    "01_PHASE_BLUEPRINTS/phase-11-entitlement-bridge-and-game-backend-boundary.md",
+    "01_PHASE_BLUEPRINTS/phase-12-admin-support-audit-tools.md",
+    "01_PHASE_BLUEPRINTS/phase-13-worker-and-async-job-processing.md",
+    "01_PHASE_BLUEPRINTS/phase-14-testing-implementation-and-quality-gates.md",
+    "01_PHASE_BLUEPRINTS/phase-15-github-actions-ci-cd.md",
+    "01_PHASE_BLUEPRINTS/phase-16-security-edge-secrets-production-hardening.md",
+    "01_PHASE_BLUEPRINTS/phase-17-observability-and-operational-readiness.md",
+    "01_PHASE_BLUEPRINTS/phase-18-staging-release-candidate.md",
+    "01_PHASE_BLUEPRINTS/phase-19-production-launch.md"
+  ]
+}

@@ -1,0 +1,39 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: website-worker
+  labels:
+    app.kubernetes.io/name: website-worker
+    app.kubernetes.io/part-of: mmo-website-platform
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/minScale: "0"
+        autoscaling.knative.dev/maxScale: "3"
+    spec:
+      serviceAccountName: website-worker-runtime@PROJECT_ID.iam.gserviceaccount.com
+      containers:
+        - image: REGION-docker.pkg.dev/PROJECT_ID/website/worker:IMAGE_TAG
+          env:
+            - name: NODE_ENV
+              value: production
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: DATABASE_URL
+                  key: latest
+            - name: EMAIL_PROVIDER
+              valueFrom:
+                secretKeyRef:
+                  name: EMAIL_PROVIDER
+                  key: latest
+            - name: EMAIL_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: EMAIL_API_KEY
+                  key: latest
+          resources:
+            limits:
+              cpu: "1"
+              memory: 512Mi

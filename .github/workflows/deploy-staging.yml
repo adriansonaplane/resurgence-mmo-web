@@ -1,0 +1,33 @@
+name: Deploy Staging
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [develop]
+
+jobs:
+  deploy-staging:
+    runs-on: ubuntu-latest
+    environment: staging
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run test
+      - run: npm run build
+      - name: Build and push images
+        run: echo "Build/push website-frontend, website-api, website-cms, and website-worker images after GCP workload identity is configured."
+      - name: Run Drizzle migrations
+        run: echo "Run npm run db:migrate -w apps/api against staging DIRECT_DATABASE_URL."
+      - name: Deploy Cloud Run services
+        run: echo "Deploy website-frontend, website-api, website-cms, and optional website-worker to staging Cloud Run."
+      - name: Staging smoke tests
+        run: echo "Run Playwright against staging APP_PUBLIC_URL."

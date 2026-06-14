@@ -1,0 +1,31 @@
+name: Deploy Production
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy-production:
+    runs-on: ubuntu-latest
+    environment: production
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run test
+      - run: npm run build
+      - name: Promote tested images
+        run: echo "Promote staging-tested Artifact Registry image digests."
+      - name: Run production-safe migrations
+        run: echo "Run reviewed Drizzle migrations against production DIRECT_DATABASE_URL."
+      - name: Deploy Cloud Run services
+        run: echo "Deploy promoted images to production Cloud Run after manual environment approval."
+      - name: Production smoke tests
+        run: echo "Run production smoke tests and notify team."

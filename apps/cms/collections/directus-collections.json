@@ -1,0 +1,63 @@
+{
+  "collections": [
+    {
+      "collection": "news_posts",
+      "meta": { "icon": "article", "note": "Published public news articles." },
+      "schema": { "name": "news_posts" }
+    },
+    {
+      "collection": "patch_notes",
+      "meta": { "icon": "new_releases", "note": "Published patch and balance notes." },
+      "schema": { "name": "patch_notes" }
+    },
+    {
+      "collection": "dev_blogs",
+      "meta": { "icon": "edit_note", "note": "Long-form developer updates." },
+      "schema": { "name": "dev_blogs" }
+    },
+    {
+      "collection": "pages",
+      "meta": { "icon": "description", "note": "Stable public pages." },
+      "schema": { "name": "pages" }
+    },
+    {
+      "collection": "faq_entries",
+      "meta": { "icon": "help", "note": "FAQ entries grouped by topic." },
+      "schema": { "name": "faq_entries" }
+    },
+    {
+      "collection": "storefront_blocks",
+      "meta": { "icon": "storefront", "note": "Editorial blocks for store pages." },
+      "schema": { "name": "storefront_blocks" }
+    },
+    {
+      "collection": "media_assets",
+      "meta": { "icon": "perm_media", "note": "Media metadata for GCS-backed uploads." },
+      "schema": { "name": "media_assets" }
+    },
+    {
+      "collection": "announcements",
+      "meta": { "icon": "campaign", "note": "Time-boxed public notices." },
+      "schema": { "name": "announcements" }
+    },
+    {
+      "collection": "seo_metadata",
+      "meta": { "icon": "travel_explore", "note": "SEO and Open Graph metadata by route." },
+      "schema": { "name": "seo_metadata" }
+    }
+  ],
+  "commonFields": [
+    { "field": "id", "type": "uuid", "special": ["uuid"] },
+    { "field": "status", "type": "string", "default_value": "draft" },
+    { "field": "slug", "type": "string" },
+    { "field": "title", "type": "string" },
+    { "field": "body", "type": "text" },
+    { "field": "date_created", "type": "timestamp" },
+    { "field": "date_updated", "type": "timestamp" }
+  ],
+  "workflow": {
+    "draftStatus": "draft",
+    "publishedStatus": "published",
+    "angularPolicy": "Angular SSR reads records where status equals published only."
+  }
+}

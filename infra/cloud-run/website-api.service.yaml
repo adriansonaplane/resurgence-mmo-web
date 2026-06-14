@@ -1,0 +1,67 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: website-api
+  labels:
+    app.kubernetes.io/name: website-api
+    app.kubernetes.io/part-of: mmo-website-platform
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/minScale: "0"
+        autoscaling.knative.dev/maxScale: "10"
+        run.googleapis.com/startup-cpu-boost: "true"
+    spec:
+      serviceAccountName: website-api-runtime@PROJECT_ID.iam.gserviceaccount.com
+      containers:
+        - image: REGION-docker.pkg.dev/PROJECT_ID/website/api:IMAGE_TAG
+          ports:
+            - containerPort: 8080
+          env:
+            - name: NODE_ENV
+              value: production
+            - name: PORT
+              value: "8080"
+            - name: APP_PUBLIC_URL
+              value: https://APP_DOMAIN
+            - name: API_PUBLIC_URL
+              value: https://API_DOMAIN
+            - name: CMS_PUBLIC_URL
+              value: https://CMS_DOMAIN
+            - name: CORS_ALLOWED_ORIGINS
+              value: https://APP_DOMAIN
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: DATABASE_URL
+                  key: latest
+            - name: AUTH0_DOMAIN
+              valueFrom:
+                secretKeyRef:
+                  name: AUTH0_DOMAIN
+                  key: latest
+            - name: AUTH0_AUDIENCE
+              valueFrom:
+                secretKeyRef:
+                  name: AUTH0_AUDIENCE
+                  key: latest
+            - name: STRIPE_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: STRIPE_SECRET_KEY
+                  key: latest
+            - name: STRIPE_WEBHOOK_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: STRIPE_WEBHOOK_SECRET
+                  key: latest
+            - name: GAME_BACKEND_SERVICE_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: GAME_BACKEND_SERVICE_TOKEN
+                  key: latest
+          resources:
+            limits:
+              cpu: "1"
+              memory: 512Mi

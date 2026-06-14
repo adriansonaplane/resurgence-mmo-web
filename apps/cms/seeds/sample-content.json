@@ -1,0 +1,46 @@
+{
+  "pages": [
+    {
+      "slug": "home",
+      "status": "published",
+      "title": "Resurgence",
+      "body": "Public homepage content for the Diablo-inspired MMORPG website platform."
+    },
+    {
+      "slug": "faq",
+      "status": "published",
+      "title": "FAQ",
+      "body": "Account, entitlement, billing, and launch-readiness questions."
+    }
+  ],
+  "news_posts": [
+    {
+      "slug": "first-campfire",
+      "status": "published",
+      "title": "First Campfire Update",
+      "body": "A sample published news post for SSR validation."
+    }
+  ],
+  "patch_notes": [
+    {
+      "slug": "pre-alpha-systems",
+      "status": "published",
+      "title": "Pre-Alpha Systems Notes",
+      "body": "A sample patch note for Directus collection smoke testing."
+    }
+  ],
+  "seo_metadata": [
+    {
+      "route": "/",
+      "title": "Resurgence",
+      "description": "A Diablo-inspired MMORPG website platform.",
+      "status": "published"
+    },
+    {
+      "route": "/store",
+      "title": "Store | Resurgence",
+      "description": "Account-level access and founder entitlements.",
+      "status": "published"
+    }
+  ]
+}

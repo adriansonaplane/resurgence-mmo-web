@@ -1,0 +1,38 @@
+name: PR Checks
+
+on:
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Backend Jest and Fastify Inject tests
+        run: npm run test:backend
+      - name: Frontend Jest and Angular tests
+        run: npm run test:frontend
+      - name: Testcontainers integration tests
+        run: npm run test:integration
+        env:
+          RUN_TESTCONTAINERS: "true"
+      - name: Build all apps
+        run: npm run build
+      - name: Playwright smoke tests
+        run: npm run test:e2e:smoke
+      - name: No Supertest or API Express regression
+        run: |
+          ! rg "supertest|request\\(" apps/api
+          ! rg "platform-express|ExpressAdapter|express\\(" apps/api
