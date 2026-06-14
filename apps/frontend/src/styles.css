@@ -1,0 +1,137 @@
+:root {
+  color-scheme: dark;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #101010;
+  color: #f5efe6;
+}
+
+body {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+.site-header {
+  align-items: center;
+  background: #15110f;
+  border-bottom: 1px solid #332720;
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+  padding: 18px clamp(18px, 5vw, 72px);
+}
+
+.brand {
+  color: #ffcf8a;
+  font-size: 1.25rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+nav a,
+footer a {
+  color: #dfc7a4;
+  text-decoration: none;
+}
+
+main {
+  min-height: calc(100vh - 150px);
+}
+
+.section {
+  margin: 0 auto;
+  max-width: 1120px;
+  padding: 56px clamp(18px, 5vw, 72px);
+}
+
+.hero {
+  background:
+    linear-gradient(90deg, rgba(16, 16, 16, 0.92), rgba(16, 16, 16, 0.42)),
+    url("https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=1800&q=80");
+  background-position: center;
+  background-size: cover;
+  min-height: 520px;
+  display: grid;
+  align-items: center;
+}
+
+.hero-content {
+  max-width: 760px;
+  padding: 0 clamp(18px, 6vw, 92px);
+}
+
+h1 {
+  font-size: clamp(2.4rem, 6vw, 5rem);
+  line-height: 1;
+  margin: 0 0 18px;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+.lede {
+  color: #ead6bd;
+  font-size: 1.15rem;
+  line-height: 1.7;
+}
+
+.grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.card {
+  background: #1b1714;
+  border: 1px solid #3a2d25;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+button,
+.button {
+  background: #b86b2a;
+  border: 0;
+  border-radius: 6px;
+  color: #fff8ee;
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  font-weight: 700;
+  padding: 11px 16px;
+  text-decoration: none;
+}
+
+input,
+textarea {
+  background: #0f0d0b;
+  border: 1px solid #4a392d;
+  border-radius: 6px;
+  box-sizing: border-box;
+  color: #fff;
+  display: block;
+  font: inherit;
+  margin: 6px 0 14px;
+  padding: 10px;
+  width: 100%;
+}
+
+footer {
+  align-items: center;
+  border-top: 1px solid #332720;
+  color: #bba88f;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  justify-content: space-between;
+  padding: 22px clamp(18px, 5vw, 72px);
+}

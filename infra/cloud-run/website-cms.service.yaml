@@ -1,0 +1,59 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: website-cms
+  labels:
+    app.kubernetes.io/name: website-cms
+    app.kubernetes.io/part-of: mmo-website-platform
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/minScale: "0"
+        autoscaling.knative.dev/maxScale: "5"
+    spec:
+      serviceAccountName: website-cms-runtime@PROJECT_ID.iam.gserviceaccount.com
+      containers:
+        - image: directus/directus:latest
+          ports:
+            - containerPort: 8055
+          env:
+            - name: PORT
+              value: "8055"
+            - name: PUBLIC_URL
+              value: https://CMS_DOMAIN
+            - name: DB_CLIENT
+              value: pg
+            - name: STORAGE_LOCATIONS
+              value: gcs
+            - name: STORAGE_GCS_DRIVER
+              value: gcs
+            - name: STORAGE_GCS_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: GCS_DIRECTUS_UPLOADS_BUCKET
+                  key: latest
+            - name: SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: DIRECTUS_SECRET
+                  key: latest
+            - name: ADMIN_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: DIRECTUS_ADMIN_EMAIL
+                  key: latest
+            - name: ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: DIRECTUS_ADMIN_PASSWORD
+                  key: latest
+            - name: DB_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: DATABASE_URL
+                  key: latest
+          resources:
+            limits:
+              cpu: "1"
+              memory: 768Mi

@@ -1,0 +1,8 @@
+/
+/about
+/contact
+/faq
+/terms
+/privacy
+/refund-policy
+/community
