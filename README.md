@@ -11,7 +11,6 @@ Blueprint-driven website platform for a Diablo-inspired MMORPG. The target stack
 - `docs` - phase deliverables, contracts, ADR backlog, testing, release, and operations notes.
 - `docker-compose.yml` - local frontend/API/CMS/Postgres/Mailpit/Stripe CLI stack.
 
-The older `game-website-frontend` and `game-website-backend` folders were inspected as the provided skeleton, but the blueprint target shape is implemented under `apps/*`.
 
 ## Install
 
