@@ -8,3 +8,5 @@ coverage/
 playwright-report/
 test-results/
 apps/api/src/database/migrations/meta/_journal.json
+d2_mmo_codex_blueprints/
+main_blueprint.md
