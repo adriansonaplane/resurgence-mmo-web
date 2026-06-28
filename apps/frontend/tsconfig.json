@@ -15,7 +15,11 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "preserve",
-    "lib": ["ES2022", "DOM"]
+    "lib": [
+      "ES2022",
+      "DOM"
+    ],
+    "ignoreDeprecations": "5.0"
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
@@ -24,5 +28,10 @@
     "typeCheckHostBindings": true,
     "strictTemplates": true
   },
-  "include": ["src/**/*.ts", "e2e/**/*.ts", "playwright.config.ts", "jest.config.ts"]
+  "include": [
+    "src/**/*.ts",
+    "e2e/**/*.ts",
+    "playwright.config.ts",
+    "jest.config.ts"
+  ]
 }

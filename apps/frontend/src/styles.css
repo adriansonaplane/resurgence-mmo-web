@@ -135,3 +135,48 @@ footer {
   justify-content: space-between;
   padding: 22px clamp(18px, 5vw, 72px);
 }
+
+.eyebrow {
+  color: #ffcf8a;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.button.secondary {
+  background: transparent;
+  border: 1px solid #7d5738;
+  color: #ffcf8a;
+}
+
+.feature-strip,
+.content-list {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.content-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.article-shell {
+  max-width: 860px;
+}
+
+.article-body {
+  color: #ead6bd;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  white-space: pre-wrap;
+}
