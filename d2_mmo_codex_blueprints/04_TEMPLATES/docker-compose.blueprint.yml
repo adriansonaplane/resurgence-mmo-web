@@ -68,3 +68,8 @@ services:
 
 volumes:
   postgres_data:
+
+# Companion boundary notes:
+# - This compose file models the web platform independently from the game runtime.
+# - Keep game-runtime services out unless intentionally creating a full-stack integration profile.
+# - Allowed web services: Angular frontend, NestJS/Fastify API, Directus, website PostgreSQL, test database, optional Redis, optional Mailpit.

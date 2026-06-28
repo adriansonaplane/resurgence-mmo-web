@@ -34,3 +34,9 @@
     - Add or update tests in the same phase as implementation.
     - Update documentation when introducing new routes, environment variables, schema changes, or external services.
     - Backend HTTP/API tests must use Fastify Inject, not Supertest.
+
+## Companion Boundary Update
+
+Add security checks for account takeover risk, payment abuse, admin dashboard abuse, permission mistakes, support tool exposure, CMS compromise, token leakage, insecure webhooks, unvalidated entitlement grants, and unsafe direct database access.
+
+Ensure public CMS roles are separated from admin/system roles.

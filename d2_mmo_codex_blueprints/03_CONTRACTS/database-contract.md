@@ -85,3 +85,55 @@ user_agent
 metadata_json
 created_at
 ```
+
+## Companion Boundary Database Additions
+
+### web-owned profile/support/admin/integration schemas
+
+Add or scaffold Drizzle tables for:
+
+```text
+player.public_profile_settings
+player.character_summary_read_models
+player.achievement_summary_read_models
+support.bug_reports
+support.ban_appeals
+support.account_recovery_requests
+support.known_issue_references
+admin.dashboard_metadata
+admin.player_report_references
+integration.account_service_events
+integration.entitlement_handoff_events
+```
+
+### Source-of-truth rule
+
+Each shared/referenced data table must include documentation indicating whether the source of truth is:
+
+```text
+website database
+Auth0
+Account Service
+Game Platform Service
+Directus
+Stripe
+```
+
+### Forbidden tables in website Drizzle schema
+
+Do not create mutable authoritative tables for:
+
+```text
+inventory
+items
+currency
+loot
+combat_state
+zone_state
+dungeon_state
+xp_rewards
+monster_ai
+movement_validation
+```
+
+Character summary read models are allowed only if clearly non-authoritative.

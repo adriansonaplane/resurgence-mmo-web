@@ -34,3 +34,21 @@
     - Add or update tests in the same phase as implementation.
     - Update documentation when introducing new routes, environment variables, schema changes, or external services.
     - Backend HTTP/API tests must use Fastify Inject, not Supertest.
+
+## Companion Boundary Update
+
+Model a dedicated website database only. Add read-model and integration schemas for safe cross-boundary data:
+
+```text
+player.public_profile_settings
+player.character_summary_read_models
+player.achievement_summary_read_models
+support.bug_reports
+support.ban_appeals
+support.account_recovery_requests
+admin.dashboard_metadata
+integration.account_service_events
+integration.entitlement_handoff_events
+```
+
+Do not create authoritative game inventory, currency, loot, combat, dungeon, or zone tables.

@@ -35,3 +35,11 @@
     - Add or update tests in the same phase as implementation.
     - Update documentation when introducing new routes, environment variables, schema changes, or external services.
     - Backend HTTP/API tests must use Fastify Inject, not Supertest.
+
+## Companion Boundary Update
+
+Auth0 is accepted for web login and is a candidate for game login, but the game runtime must create and validate its own game session.
+
+Add `docs/adr/auth0-long-term-game-login-evaluation.md` covering simplicity, cost, vendor lock-in, security benefits, integration complexity, migration difficulty, and game session creation after identity validation.
+
+Add or scaffold an Account Service client boundary instead of treating Auth0 login as direct game login.

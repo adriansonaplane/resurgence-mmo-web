@@ -42,3 +42,21 @@ Use:
 - Testcontainers for PostgreSQL/Drizzle integration tests.
 
 Do not use Supertest.
+
+## Companion Boundary Additions
+
+The backend is the Companion Web Platform API. It is not the real-time game backend.
+
+Add or scaffold modules for cross-boundary contracts:
+
+```text
+account-service
+player-profiles
+entitlement-bridge
+```
+
+The `account-service` module must represent the controlled handoff to account/game identity services. It should be a client abstraction or interface during early implementation, not a direct write path into game-critical tables.
+
+The backend may support read-only character/profile summary display, but it must not directly mutate inventory, equipment, items, currency, loot, XP, combat state, zone state, dungeon state, or game mutation audit logs.
+
+Admin operations that touch account status, bans, suspensions, entitlement grants, character reset requests, or duplicate-item investigation must use reviewed service endpoints and emit audit logs.

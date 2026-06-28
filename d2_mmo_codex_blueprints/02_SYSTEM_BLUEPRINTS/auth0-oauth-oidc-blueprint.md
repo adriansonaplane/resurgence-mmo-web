@@ -34,3 +34,31 @@ super_admin
 ## Security Rule
 
 Frontend route guards are not security boundaries. NestJS guards are the authoritative enforcement layer.
+
+## Companion Boundary Additions
+
+Auth0 is accepted for the web platform and is a candidate for game login, but long-term game-login usage remains tentative and requires evaluation.
+
+Codex must document these tradeoffs in `docs/adr/auth0-long-term-game-login-evaluation.md`:
+
+```text
+simplicity
+cost at scale
+vendor lock-in
+security benefits
+integration complexity
+migration difficulty
+how game sessions are created after web identity validation
+```
+
+The game must not blindly trust web login state. Required model:
+
+```text
+Player authenticates through Auth0
+-> Web Platform or Account Service validates identity
+-> Game session is created
+-> Gateway validates game session
+-> Zone server accepts only validated player connection
+```
+
+Keep web sessions and game sessions explicitly separated.

@@ -37,3 +37,28 @@ Use:
 - Contact form creates support/contact record.
 - Drizzle migrations apply successfully.
 - Database transaction rolls back on failed entitlement grant.
+
+## Companion Boundary Testing Additions
+
+Add tests or documented test stubs for:
+
+```text
+Account Service boundary client does not directly write game-critical data
+web login does not equal game session validation
+profile APIs are read-only for game summary data
+entitlement webhook creates web entitlement and handoff event only
+admin entitlement grant emits audit event
+support ticket / bug report / ban appeal flows
+Directus content fetch for support articles, documentation, and alpha info
+CMS role separation expectation
+no direct mutation of inventory, currency, loot, XP, combat, dungeon, or zone tables
+```
+
+Maintain the required testing tools:
+
+```text
+Frontend: Angular Testing Utilities + Jest + Playwright
+Backend: Jest + Fastify Inject + Testcontainers
+```
+
+Supertest remains prohibited.

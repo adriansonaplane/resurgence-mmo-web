@@ -43,3 +43,44 @@ Build the public website, SEO storefront, account dashboard, and admin shell usi
 - Jest tests for utilities/services.
 - Angular Testing Utilities for components, forms, guards, services.
 - Playwright for public routes, auth redirects, storefront, dashboard access, admin restrictions, checkout initiation.
+
+## Companion Boundary Additions
+
+The Angular app must support the Companion Web Platform surfaces:
+
+```text
+public website
+account portal
+player profile portal
+storefront
+support portal
+admin dashboard
+documentation / portfolio site
+```
+
+Minimum public website before playable Alpha:
+
+```text
+landing page
+project overview
+development update area
+media/mock-up area
+contact/community link
+basic account portal link if available
+support or feedback entry point
+Alpha information page when appropriate
+```
+
+Add or scaffold route areas for:
+
+```text
+/public/media
+/public/alpha-info
+/public/documentation
+/public/portfolio
+/profile
+/support
+/admin/support
+```
+
+Private account/admin pages should be client-side protected for UX, but backend authorization remains the real security boundary.

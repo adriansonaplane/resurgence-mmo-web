@@ -30,3 +30,21 @@
     - Add or update tests in the same phase as implementation.
     - Update documentation when introducing new routes, environment variables, schema changes, or external services.
     - Backend HTTP/API tests must use Fastify Inject, not Supertest.
+
+## Companion Boundary Update
+
+This phase must also create the Account Service and Entitlement Service boundary contracts.
+
+Add or update:
+
+```text
+docs/contracts/account-service-contract.md
+docs/contracts/entitlement-service-contract.md
+docs/boundaries/account-service-boundary.md
+docs/boundaries/entitlement-boundary.md
+apps/api/src/modules/account-service/*
+apps/api/src/modules/entitlement-bridge/*
+apps/api/src/modules/player-profiles/*
+```
+
+The game runtime must validate game sessions independently. The website must not blindly trust Auth0 web sessions as game sessions.

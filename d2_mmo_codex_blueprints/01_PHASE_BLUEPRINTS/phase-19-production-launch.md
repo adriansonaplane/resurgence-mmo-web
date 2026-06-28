@@ -31,3 +31,9 @@
     - Add or update tests in the same phase as implementation.
     - Update documentation when introducing new routes, environment variables, schema changes, or external services.
     - Backend HTTP/API tests must use Fastify Inject, not Supertest.
+
+## Companion Boundary Update
+
+Public website launch should precede playable Alpha. Production launch readiness must not require production Kubernetes/Agones game runtime deployment.
+
+Verify the web platform can deploy independently through Cloud Run while game servers remain Docker/local/staged until needed.

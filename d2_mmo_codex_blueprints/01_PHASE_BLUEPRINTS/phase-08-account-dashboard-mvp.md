@@ -32,3 +32,21 @@
     - Add or update tests in the same phase as implementation.
     - Update documentation when introducing new routes, environment variables, schema changes, or external services.
     - Backend HTTP/API tests must use Fastify Inject, not Supertest.
+
+## Companion Boundary Update
+
+Expand the account dashboard MVP to include or scaffold:
+
+```text
+account profile
+email/auth provider management links
+linked account display
+security settings
+account status
+support links
+account recovery entry point
+public/private profile settings
+character summary display via read model/API only
+```
+
+Do not mutate game-critical state from account pages.

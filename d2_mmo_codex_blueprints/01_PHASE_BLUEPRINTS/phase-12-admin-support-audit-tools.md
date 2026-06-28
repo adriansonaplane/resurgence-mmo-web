@@ -32,3 +32,26 @@
     - Add or update tests in the same phase as implementation.
     - Update documentation when introducing new routes, environment variables, schema changes, or external services.
     - Backend HTTP/API tests must use Fastify Inject, not Supertest.
+
+## Companion Boundary Update
+
+Admin tools may live inside the website platform for early development, but must be sensitive internal tools.
+
+Add or scaffold admin support for:
+
+```text
+account lookup
+character summary lookup
+support review
+ban/suspension tools
+player reports
+server status display
+deployment status links
+operational dashboard links
+audit log search
+customer support workflows
+ban appeal review
+account recovery review
+```
+
+Sensitive actions must require RBAC, emit audit logs, avoid direct game-critical mutation where possible, and use reviewed service endpoints.

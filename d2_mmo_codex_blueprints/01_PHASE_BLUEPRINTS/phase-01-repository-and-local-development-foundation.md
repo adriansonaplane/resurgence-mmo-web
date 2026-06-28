@@ -34,3 +34,17 @@
     - Add or update tests in the same phase as implementation.
     - Update documentation when introducing new routes, environment variables, schema changes, or external services.
     - Backend HTTP/API tests must use Fastify Inject, not Supertest.
+
+## Companion Boundary Update
+
+Respect the repository boundary: web frontend/backend/CMS/worker live in this web platform repo, while game-platform-services and game-server-runtime remain external.
+
+Add docs placeholders:
+
+```text
+docs/boundaries/account-service-boundary.md
+docs/boundaries/entitlement-boundary.md
+docs/boundaries/data-ownership-boundary.md
+```
+
+Local Docker Compose should model the web platform independently: Angular frontend, NestJS/Fastify backend, dedicated website PostgreSQL database, Directus, test database, optional Redis.

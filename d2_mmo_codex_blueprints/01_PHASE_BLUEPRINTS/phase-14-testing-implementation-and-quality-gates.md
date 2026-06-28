@@ -34,3 +34,9 @@
     - Add or update tests in the same phase as implementation.
     - Update documentation when introducing new routes, environment variables, schema changes, or external services.
     - Backend HTTP/API tests must use Fastify Inject, not Supertest.
+
+## Companion Boundary Update
+
+Add tests or documented test stubs for support portal flows, CMS content routes, Account Service boundary, read-only profile summaries, admin permissions, entitlement handoff, and prohibition of direct game-critical mutations.
+
+Keep Fastify Inject, Jest, Testcontainers, Angular Testing Utilities, Playwright, and Jest as the testing stack.
