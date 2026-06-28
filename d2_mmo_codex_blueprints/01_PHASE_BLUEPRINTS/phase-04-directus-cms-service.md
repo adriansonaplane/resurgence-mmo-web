@@ -32,3 +32,9 @@
     - Add or update tests in the same phase as implementation.
     - Update documentation when introducing new routes, environment variables, schema changes, or external services.
     - Backend HTTP/API tests must use Fastify Inject, not Supertest.
+
+## Companion Boundary Update
+
+Directus should manage or scaffold collections for public pages, news, patch notes, media posts, development blogs, FAQ pages, support articles, public documentation pages, developer documentation pages if approved, known issue pages, portfolio pages, media gallery, and Alpha information pages.
+
+Do not let Directus control authoritative gameplay balance/configuration, loot tables, item stats, or server configuration.

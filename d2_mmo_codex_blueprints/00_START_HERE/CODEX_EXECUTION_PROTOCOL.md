@@ -42,3 +42,17 @@ A Codex-generated task is complete only when:
 - New database changes include Drizzle migration updates.
 - Security-sensitive actions have audit logging.
 - The phase acceptance criteria are satisfied.
+
+## Companion Boundary Update
+
+After reading this file, also read:
+
+```text
+00_START_HERE/COMPANION_BOUNDARY_IMPLEMENTATION_NOTES.md
+references/companion-web-platform-boundary.md
+02_SYSTEM_BLUEPRINTS/companion-web-platform-boundary-blueprint.md
+02_SYSTEM_BLUEPRINTS/account-service-boundary-blueprint.md
+03_CONTRACTS/boundary-contract.md
+```
+
+These files are now part of the source of truth. They define the companion web platform as a non-realtime system, require Account Service boundaries for account/game identity handoffs, require a dedicated website database, and prohibit direct game-critical state mutations from the web platform.

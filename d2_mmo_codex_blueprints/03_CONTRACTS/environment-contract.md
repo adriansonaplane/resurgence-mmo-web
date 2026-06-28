@@ -44,3 +44,20 @@ OTEL_EXPORTER_OTLP_ENDPOINT
 - Production secrets live in Google Secret Manager.
 - `.env.example` may contain variable names only, no real secrets.
 - Staging and production secrets must be separate.
+
+## Companion Boundary Environment Additions
+
+Add environment placeholders for service boundaries:
+
+```text
+ACCOUNT_SERVICE_BASE_URL=
+ACCOUNT_SERVICE_AUDIENCE=
+ACCOUNT_SERVICE_CLIENT_ID=
+ACCOUNT_SERVICE_CLIENT_SECRET=
+ENTITLEMENT_SERVICE_BASE_URL=
+GAME_GATEWAY_SESSION_AUDIENCE=
+DIRECTUS_PUBLIC_DOCS_COLLECTION=public_documentation_pages
+DIRECTUS_DEV_DOCS_COLLECTION=developer_documentation_pages
+```
+
+These values may remain placeholders in early development, but they must be documented in `.env.example`.

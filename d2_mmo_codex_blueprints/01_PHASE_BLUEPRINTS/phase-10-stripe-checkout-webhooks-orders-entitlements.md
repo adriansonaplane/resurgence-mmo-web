@@ -39,3 +39,18 @@
     - Add or update tests in the same phase as implementation.
     - Update documentation when introducing new routes, environment variables, schema changes, or external services.
     - Backend HTTP/API tests must use Fastify Inject, not Supertest.
+
+## Companion Boundary Update
+
+Implement the two-layer entitlement boundary:
+
+```text
+Stripe confirmation
+-> web order record
+-> web entitlement record
+-> entitlement handoff event
+-> Account/Entitlement Service validation
+-> game account entitlement update by game/account service
+```
+
+Do not create in-game items directly from Stripe or website frontend state.

@@ -44,3 +44,31 @@ invoice.payment_failed
 ## Game Boundary
 
 Website grants account-level entitlements only. It must not directly insert live items into character inventory.
+
+## Companion Boundary Additions
+
+Stripe entitlements may exist in both the web-account layer and the game-account layer.
+
+Required entitlement flow:
+
+```text
+Player purchases product on website
+-> Stripe confirms transaction
+-> Web backend records order
+-> Web entitlement record is created
+-> Account / Entitlement Service validates entitlement
+-> Game account entitlement is created or updated
+-> Game service applies permitted benefit
+```
+
+The web backend records orders, purchase history, storefront-facing entitlement records, and handoff events. The Account/Entitlement Service validates and applies game-relevant entitlements.
+
+Add or scaffold:
+
+```text
+apps/api/src/modules/entitlement-bridge/
+docs/contracts/entitlement-service-contract.md
+docs/boundaries/entitlement-boundary.md
+```
+
+An entitlement is not automatically an in-game item. Game-impacting rewards must not be granted directly by the website frontend.

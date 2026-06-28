@@ -27,3 +27,20 @@ website-worker    Optional async worker Cloud Run service
 - Cloud Load Balancer as public entrypoint.
 - Cloud CDN for public/static assets.
 - Cloud Armor for WAF/DDoS and edge rules.
+
+## Companion Boundary Deployment Additions
+
+The Companion Web Platform deploys independently from the real-time game runtime.
+
+Deploy or scaffold Cloud Run services for:
+
+```text
+website frontend
+website API
+Directus CMS
+optional worker
+```
+
+Do not require Kubernetes/Agones to launch the public website or web platform MVP.
+
+The game runtime may remain Docker/local/staged until Kubernetes and Agones are needed. Web deployment must not depend on production game-server infrastructure.

@@ -34,3 +34,20 @@
     - Add or update tests in the same phase as implementation.
     - Update documentation when introducing new routes, environment variables, schema changes, or external services.
     - Backend HTTP/API tests must use Fastify Inject, not Supertest.
+
+## Companion Boundary Update
+
+The public website should launch before playable Alpha. Add MVP routes for:
+
+```text
+landing page
+project overview
+development updates
+media/mock-up gallery
+contact/community links
+support or feedback entry point
+Alpha information page
+public documentation / portfolio entry points
+```
+
+Use SSR/prerendering where appropriate for public content.

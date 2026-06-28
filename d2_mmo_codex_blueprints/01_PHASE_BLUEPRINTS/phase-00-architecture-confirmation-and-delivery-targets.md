@@ -32,3 +32,13 @@
     - Add or update tests in the same phase as implementation.
     - Update documentation when introducing new routes, environment variables, schema changes, or external services.
     - Backend HTTP/API tests must use Fastify Inject, not Supertest.
+
+## Companion Boundary Update
+
+Before implementation, read `references/companion-web-platform-boundary.md` and confirm the web platform is treated as a companion/non-realtime layer.
+
+Add `docs/boundaries/companion-web-platform-boundary.md` to the generated repo and reference it from the root README.
+
+Acceptance additions:
+- Codex confirms web platform does not simulate the game.
+- Account Service boundary, dedicated website database, and web/game data ownership are documented.
