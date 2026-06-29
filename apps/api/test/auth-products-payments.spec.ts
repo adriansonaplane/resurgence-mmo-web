@@ -20,6 +20,29 @@ describe('API guards, storefront, checkout, webhooks, and audit', () => {
     expect(response.statusCode).toBe(401);
   });
 
+  it('exposes Account Service boundary placeholders without creating a game session', async () => {
+    const status = await inject('GET', '/api/v1/account/status', {
+      headers: { authorization: 'Bearer test-player' },
+    });
+    expect(status.statusCode).toBe(200);
+    expect(status.json().status).toMatchObject({
+      auth0Subject: 'auth0|player',
+      source: 'stub',
+      accountState: 'active',
+      gameSessionEligible: false,
+    });
+
+    const gameSession = await inject('POST', '/api/v1/account/game-session/request-placeholder', {
+      headers: { authorization: 'Bearer test-player' },
+    });
+    expect(gameSession.statusCode).toBe(201);
+    expect(gameSession.json().gameSession).toMatchObject({
+      status: 'contract_placeholder',
+      webSessionIsGameSession: false,
+      gatewayValidationRequired: true,
+    });
+  });
+
   it('returns only visible storefront products', async () => {
     const response = await inject('GET', '/api/v1/store/products');
     expect(response.statusCode).toBe(200);
@@ -98,6 +121,14 @@ describe('API guards, storefront, checkout, webhooks, and audit', () => {
       headers: { authorization: 'Bearer test-admin' },
     });
     expect(audit.json().audit.some((record: { action: string }) => record.action === 'admin.entitlement.grant')).toBe(true);
+    expect(
+      audit
+        .json()
+        .audit.some(
+          (record: { action: string; metadata?: { handoffId?: string } }) =>
+            record.action === 'entitlement.granted' && record.metadata?.handoffId?.startsWith('entitlement_handoff_'),
+        ),
+    ).toBe(true);
   });
 
   it('rejects staff roles that do not carry required permissions', async () => {
