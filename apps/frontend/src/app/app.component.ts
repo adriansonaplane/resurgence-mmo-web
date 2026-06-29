@@ -10,6 +10,8 @@ import { RouterLink, RouterOutlet } from '@angular/router';
       <nav aria-label="Primary">
         <a routerLink="/store">Store</a>
         <a routerLink="/news">News</a>
+        <a routerLink="/docs">Docs</a>
+        <a routerLink="/support">Support</a>
         <a routerLink="/community">Community</a>
         <a routerLink="/account">Account</a>
         <a routerLink="/admin">Admin</a>
