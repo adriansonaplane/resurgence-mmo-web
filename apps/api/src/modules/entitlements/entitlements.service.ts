@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { AccountServiceClient } from '../account-service/account-service.client';
 import { AuditService } from '../audit/audit.service';
 
 export interface EntitlementRecord {
@@ -14,7 +15,10 @@ export interface EntitlementRecord {
 export class EntitlementsService {
   private readonly entitlements = new Map<string, EntitlementRecord>();
 
-  constructor(private readonly auditService: AuditService) {}
+  constructor(
+    private readonly accountServiceClient: AccountServiceClient,
+    private readonly auditService: AuditService,
+  ) {}
 
   grant(input: Omit<EntitlementRecord, 'status' | 'grantedAt'>) {
     const key = this.keyFor(input.auth0Subject, input.entitlementKey, input.source, input.sourceOrderId);
@@ -27,12 +31,18 @@ export class EntitlementsService {
       grantedAt: new Date().toISOString(),
     };
     this.entitlements.set(key, record);
+    const handoff = this.accountServiceClient.queueEntitlementHandoff({
+      auth0Subject: input.auth0Subject,
+      entitlementKey: input.entitlementKey,
+      sourceOrderId: input.sourceOrderId,
+      webEntitlementSource: input.source,
+    });
     this.auditService.record({
       actorAuth0Subject: input.auth0Subject,
       action: 'entitlement.granted',
       targetType: 'entitlement',
       targetId: input.entitlementKey,
-      metadata: { source: input.source, sourceOrderId: input.sourceOrderId },
+      metadata: { source: input.source, sourceOrderId: input.sourceOrderId, handoffId: handoff.id },
     });
     return record;
   }

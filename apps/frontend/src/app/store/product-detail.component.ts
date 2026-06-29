@@ -15,6 +15,7 @@ import { Product } from '../models/product';
         <p class="lede">{{ item.description }}</p>
         <p>{{ item.unitAmount / 100 | currency: item.currency.toUpperCase() }}</p>
         <button type="button" (click)="checkout(item.slug)">Checkout</button>
+        <button class="secondary" type="button" (click)="simulatePurchase(item.slug)">Simulate Local Purchase</button>
         @if (message()) {
           <p>{{ message() }}</p>
         }
@@ -51,6 +52,13 @@ export class ProductDetailComponent implements OnInit {
         if (session.url) window.location.href = session.url;
       },
       error: () => this.message.set('Login is required before checkout.'),
+    });
+  }
+
+  simulatePurchase(productSlug: string) {
+    this.api.createMockCompletedPurchase(productSlug).subscribe({
+      next: (result) => this.message.set(result.message),
+      error: () => this.message.set('Login is required before simulating a local purchase.'),
     });
   }
 }
