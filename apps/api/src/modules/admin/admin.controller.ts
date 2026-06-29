@@ -6,9 +6,12 @@ import { Roles } from '../../common/decorators/roles.decorator';
 import { Auth0Guard } from '../../common/guards/auth0.guard';
 import { PermissionsGuard } from '../../common/guards/permissions.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
+import { AccountServiceClient } from '../account-service/account-service.client';
 import { AuditService } from '../audit/audit.service';
+import { ContactService } from '../contact/contact.service';
 import { EntitlementsService } from '../entitlements/entitlements.service';
 import { OrdersService } from '../orders/orders.service';
+import { SupportService } from '../support/support.service';
 
 @ApiTags('admin')
 @ApiBearerAuth()
@@ -17,9 +20,12 @@ import { OrdersService } from '../orders/orders.service';
 @Controller('admin')
 export class AdminController {
   constructor(
+    private readonly accountServiceClient: AccountServiceClient,
     private readonly ordersService: OrdersService,
     private readonly entitlementsService: EntitlementsService,
     private readonly auditService: AuditService,
+    private readonly contactService: ContactService,
+    private readonly supportService: SupportService,
   ) {}
 
   @Get('orders')
@@ -88,7 +94,7 @@ export class AdminController {
   @Get('support/contact-messages')
   @Permissions('admin:read')
   contactMessages() {
-    return { messages: [] };
+    return { messages: this.contactService.list() };
   }
 
   @Patch('products/:id')
@@ -102,5 +108,105 @@ export class AdminController {
       metadata: body,
     });
     return { status: 'accepted', id };
+  }
+
+  @Get('accounts/:id/status')
+  @Permissions('admin:read')
+  accountStatus(@Param('id') id: string) {
+    return { status: this.accountServiceClient.getAccountStatus(id) };
+  }
+
+  @Post('accounts/:id/ban')
+  @Permissions('admin:write')
+  banAccount(@CurrentUser() user: CurrentUser, @Param('id') id: string, @Body() body: Record<string, unknown>) {
+    this.auditService.record({
+      actorAuth0Subject: user.sub,
+      action: 'admin.account.ban.requested',
+      targetType: 'account',
+      targetId: id,
+      metadata: { ...body, boundary: 'Account Service' },
+    });
+    return { status: 'queued_for_account_service', accountId: id };
+  }
+
+  @Post('accounts/:id/suspend')
+  @Permissions('admin:write')
+  suspendAccount(@CurrentUser() user: CurrentUser, @Param('id') id: string, @Body() body: Record<string, unknown>) {
+    this.auditService.record({
+      actorAuth0Subject: user.sub,
+      action: 'admin.account.suspend.requested',
+      targetType: 'account',
+      targetId: id,
+      metadata: { ...body, boundary: 'Account Service' },
+    });
+    return { status: 'queued_for_account_service', accountId: id };
+  }
+
+  @Get('characters/:id/summary')
+  @Permissions('admin:read')
+  characterSummary(@Param('id') id: string) {
+    return {
+      character: {
+        id,
+        sourceOfTruth: 'Game Platform Service read model',
+        readOnly: true,
+      },
+    };
+  }
+
+  @Post('characters/:id/reset-request')
+  @Permissions('admin:write')
+  characterResetRequest(@CurrentUser() user: CurrentUser, @Param('id') id: string, @Body() body: Record<string, unknown>) {
+    this.auditService.record({
+      actorAuth0Subject: user.sub,
+      action: 'admin.character.reset.requested',
+      targetType: 'character',
+      targetId: id,
+      metadata: { ...body, boundary: 'Game Platform Service' },
+    });
+    return { status: 'queued_for_game_platform_service', characterId: id };
+  }
+
+  @Get('player-reports')
+  @Permissions('admin:read')
+  playerReports() {
+    return { reports: [], sourceOfTruth: 'Account Service' };
+  }
+
+  @Get('server-status')
+  @Permissions('admin:read')
+  serverStatus() {
+    return { status: 'unavailable', sourceOfTruth: 'Game Platform Service', placeholder: true };
+  }
+
+  @Get('deployment-status')
+  @Permissions('admin:read')
+  deploymentStatus() {
+    return { status: 'unknown', sourceOfTruth: 'Cloud Run / GitHub Actions', placeholder: true };
+  }
+
+  @Get('support/tickets')
+  @Permissions('admin:read')
+  supportTickets() {
+    return { tickets: this.supportService.listTickets() };
+  }
+
+  @Patch('support/tickets/:id')
+  @Permissions('admin:write')
+  updateSupportTicket(@CurrentUser() user: CurrentUser, @Param('id') id: string, @Body() body: { status?: string }) {
+    this.auditService.record({
+      actorAuth0Subject: user.sub,
+      action: 'admin.support.ticket.update',
+      targetType: 'support_ticket',
+      targetId: id,
+      metadata: body,
+    });
+    return { ticket: this.supportService.updateTicket(id, body) };
+  }
+
+  @Get('support/ban-appeals')
+  @Permissions('admin:read')
+  banAppeals() {
+    return { banAppeals: this.supportService.listBanAppeals() };
   }
 }
