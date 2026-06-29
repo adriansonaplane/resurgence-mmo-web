@@ -2,12 +2,18 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import Stripe from 'stripe';
 import { ProductsService } from '../products/products.service';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
+import { EntitlementsService } from '../entitlements/entitlements.service';
+import { OrdersService } from '../orders/orders.service';
 
 @Injectable()
 export class PaymentsService {
   private readonly stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_placeholder');
 
-  constructor(private readonly productsService: ProductsService) {}
+  constructor(
+    private readonly productsService: ProductsService,
+    private readonly ordersService: OrdersService,
+    private readonly entitlementsService: EntitlementsService,
+  ) {}
 
   async createCheckoutSession(productSlug: string, user: CurrentUser) {
     const product = this.productsService.findVisibleBySlug(productSlug);
@@ -49,6 +55,36 @@ export class PaymentsService {
     return {
       url: process.env.APP_PUBLIC_URL ? `${process.env.APP_PUBLIC_URL}/account/billing` : 'http://localhost:4200/account/billing',
       placeholder: true,
+    };
+  }
+
+  createMockCompletedPurchase(productSlug: string, user: CurrentUser) {
+    if (process.env.NODE_ENV === 'production') {
+      throw new BadRequestException('Mock checkout completion is disabled in production.');
+    }
+
+    const product = this.productsService.findVisibleBySlug(productSlug);
+    const order = this.ordersService.createFromCheckout({
+      auth0Subject: user.sub,
+      stripeCheckoutSessionId: `cs_mock_${product.slug}_${Date.now()}`,
+      status: 'paid_mock',
+      productSlug: product.slug,
+      entitlementKey: product.entitlementKey,
+      totalAmount: product.unitAmount,
+      currency: product.currency,
+    });
+    const entitlement = this.entitlementsService.grant({
+      auth0Subject: user.sub,
+      entitlementKey: product.entitlementKey,
+      source: 'stripe_webhook',
+      sourceOrderId: order.id,
+    });
+
+    return {
+      order,
+      entitlement,
+      simulated: true,
+      message: 'Local mock purchase completed through the webhook-equivalent service path.',
     };
   }
 }

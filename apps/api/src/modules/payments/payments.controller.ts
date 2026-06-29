@@ -21,4 +21,9 @@ export class PaymentsController {
   createCustomerPortal() {
     return this.paymentsService.createCustomerPortal();
   }
+
+  @Post('mock-complete')
+  createMockCompletedPurchase(@Body() dto: CreateCheckoutSessionDto, @CurrentUser() user: CurrentUser) {
+    return this.paymentsService.createMockCompletedPurchase(dto.productSlug, user);
+  }
 }

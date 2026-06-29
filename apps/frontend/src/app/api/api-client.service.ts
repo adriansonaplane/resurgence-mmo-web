@@ -22,6 +22,12 @@ export class ApiClient {
     });
   }
 
+  createMockCompletedPurchase(productSlug: string) {
+    return this.http.post<{ simulated: boolean; message: string }>(`${apiBaseUrl}/payments/mock-complete`, {
+      productSlug,
+    });
+  }
+
   getDashboard() {
     return this.http.get<{
       profile: { subject: string; email?: string; roles: string[] };

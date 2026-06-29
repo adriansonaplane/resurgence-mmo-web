@@ -43,6 +43,7 @@ Base prefix: `/api/v1`
 - `POST /support/account-recovery-requests`
 - `POST /payments/checkout-session`
 - `POST /payments/customer-portal`
+- `POST /payments/mock-complete` (local development only)
 
 ## Admin
 

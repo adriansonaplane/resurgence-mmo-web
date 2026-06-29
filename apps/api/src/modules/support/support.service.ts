@@ -44,14 +44,26 @@ export class SupportService {
 
   listArticles() {
     return {
-      articles: [],
+      articles: [
+        {
+          slug: 'account-access',
+          title: 'Account Access',
+          summary: 'Use local mock login buttons until Auth0 is provisioned.',
+        },
+      ],
       sourceOfTruth: 'Directus',
     };
   }
 
   listKnownIssues() {
     return {
-      knownIssues: [],
+      knownIssues: [
+        {
+          slug: 'mock-services',
+          title: 'Mock services are enabled',
+          summary: 'Local mock services simulate provisioned integrations for development.',
+        },
+      ],
       sourceOfTruth: 'Directus',
     };
   }

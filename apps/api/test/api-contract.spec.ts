@@ -19,6 +19,7 @@ describe('Companion API contract additions', () => {
     const docs = await inject('GET', '/api/v1/content/docs');
     expect(docs.statusCode).toBe(200);
     expect(docs.json()).toMatchObject({ sourceOfTruth: 'Directus' });
+    expect(docs.json().docs).toHaveLength(1);
 
     const alpha = await inject('GET', '/api/v1/content/alpha-info');
     expect(alpha.statusCode).toBe(200);
@@ -53,6 +54,24 @@ describe('Companion API contract additions', () => {
     });
     expect(bugReport.statusCode).toBe(201);
     expect(bugReport.json().bugReport).toMatchObject({ status: 'new', sourceOfTruth: 'website database' });
+  });
+
+  it('simulates local purchase processing through the entitlement handoff path', async () => {
+    const purchase = await inject('POST', '/api/v1/payments/mock-complete', {
+      headers: { authorization: 'Bearer test-player' },
+      payload: { productSlug: 'founder-pack' },
+    });
+    expect(purchase.statusCode).toBe(201);
+    expect(purchase.json()).toMatchObject({
+      simulated: true,
+      entitlement: { entitlementKey: 'founder_pack', status: 'active' },
+    });
+
+    const dashboard = await inject('GET', '/api/v1/account/dashboard', {
+      headers: { authorization: 'Bearer test-player' },
+    });
+    expect(dashboard.json().purchases.length).toBeGreaterThanOrEqual(1);
+    expect(dashboard.json().entitlements.some((item: { entitlementKey: string }) => item.entitlementKey === 'founder_pack')).toBe(true);
   });
 
   it('exposes expanded admin contract routes as audited service-mediated placeholders', async () => {

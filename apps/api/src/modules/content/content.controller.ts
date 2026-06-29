@@ -12,7 +12,7 @@ export class ContentController {
   @Get('docs')
   docs() {
     return {
-      docs: [],
+      docs: this.directusService.publishedCollection('docs'),
       sourceOfTruth: 'Directus',
       directusUrl: this.directusService.publicUrl,
     };
@@ -21,7 +21,7 @@ export class ContentController {
   @Get('docs/:slug')
   doc(@Param('slug') slug: string) {
     return {
-      doc: { slug, title: slug, body: null },
+      doc: this.directusService.publishedItem('docs', slug) ?? { slug, title: slug, body: null },
       sourceOfTruth: 'Directus',
       directusUrl: this.directusService.publicUrl,
     };
@@ -29,16 +29,20 @@ export class ContentController {
 
   @Get('portfolio')
   portfolio() {
-    return { projects: [], sourceOfTruth: 'Directus', directusUrl: this.directusService.publicUrl };
+    return { projects: this.directusService.publishedCollection('portfolio'), sourceOfTruth: 'Directus', directusUrl: this.directusService.publicUrl };
   }
 
   @Get('media-gallery')
   mediaGallery() {
-    return { assets: [], sourceOfTruth: 'Directus', directusUrl: this.directusService.publicUrl };
+    return { assets: this.directusService.publishedCollection('media_gallery'), sourceOfTruth: 'Directus', directusUrl: this.directusService.publicUrl };
   }
 
   @Get('alpha-info')
   alphaInfo() {
-    return { alpha: { status: 'not_announced' }, sourceOfTruth: 'Directus', directusUrl: this.directusService.publicUrl };
+    return {
+      alpha: this.directusService.publishedItem('alpha_info', 'alpha-status') ?? { status: 'not_announced' },
+      sourceOfTruth: 'Directus',
+      directusUrl: this.directusService.publicUrl,
+    };
   }
 }
